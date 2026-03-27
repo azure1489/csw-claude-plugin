@@ -1,0 +1,9 @@
+{
+  "name": "csw-claude-plugin",
+  "description": "CSW Agent plugin — Instagram post management and WeChat article generation via MCP tools and skills",
+  "version": "0.1.0",
+  "author": { "name": "CSW Team" },
+  "license": "MIT",
+  "keywords": ["csw", "wechat", "instagram", "mcp", "article-generation"],
+  "commands": ["./commands/setup.md"]
+}
