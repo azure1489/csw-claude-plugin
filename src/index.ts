@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // index.ts — MCP server entry point for csw-claude-plugin
 // CSW Claude 插件 MCP 服务入口
 
