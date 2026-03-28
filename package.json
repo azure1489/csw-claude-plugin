@@ -4,9 +4,10 @@
   "description": "Claude Code plugin for CSW Agent — Instagram post management and WeChat article generation via MCP",
   "type": "module",
   "bin": {
-    "csw-mcp": "./dist/index.js"
+    "csw-mcp": "./bin/csw-mcp.mjs"
   },
   "files": [
+    "bin",
     "dist",
     "skills",
     "commands",
