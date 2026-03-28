@@ -24,6 +24,7 @@ ok()    { echo -e "${GREEN}[OK]${NC}    $*"; }
 CONFIG_FILE="${HOME}/.claude.json"
 NPM_PACKAGE="@aworld/csw-claude-plugin@latest"
 MCP_NAME="csw"
+SKILLS_DIR="${HOME}/.claude/skills"
 
 # ---------------------------------------------------------------------------
 # Parse arguments
@@ -64,6 +65,11 @@ uninstall() {
       console.log('mcpServers.${MCP_NAME} not found — nothing to remove');
     }
   "
+
+  # Remove skills
+  info "Removing skills from ${SKILLS_DIR} ..."
+  rm -rf "${SKILLS_DIR}/csw-article-pipeline"
+  rm -rf "${SKILLS_DIR}/csw-article-modify"
 
   ok "CSW Claude Plugin uninstalled."
 }
@@ -146,6 +152,26 @@ install() {
     console.log('Written: ' + f);
   "
 
+  # 6. Install skills to ~/.claude/skills/
+  info "Installing skills to ${SKILLS_DIR} ..."
+
+  TEMP_DIR=$(mktemp -d)
+  if npm pack "${NPM_PACKAGE}" --pack-destination="${TEMP_DIR}" &>/dev/null; then
+    tar xzf "${TEMP_DIR}"/*.tgz -C "${TEMP_DIR}" 2>/dev/null
+
+    mkdir -p "${SKILLS_DIR}/csw-article-pipeline/references"
+    mkdir -p "${SKILLS_DIR}/csw-article-modify"
+
+    cp "${TEMP_DIR}/package/skills/article-pipeline/SKILL.md" "${SKILLS_DIR}/csw-article-pipeline/"
+    cp -r "${TEMP_DIR}/package/skills/article-pipeline/references/." "${SKILLS_DIR}/csw-article-pipeline/references/"
+    cp "${TEMP_DIR}/package/skills/article-modify/SKILL.md" "${SKILLS_DIR}/csw-article-modify/"
+
+    ok "Skills installed."
+  else
+    warn "Could not download skills from npm. You can manually copy them later."
+  fi
+  rm -rf "${TEMP_DIR}"
+
   ok "CSW Claude Plugin installed successfully!"
   echo ""
   echo -e "${GREEN}Available MCP Tools (27 total):${NC}"
@@ -153,7 +179,11 @@ install() {
   echo "  Articles (5)    Sections (4)    Publishing (3)"
   echo "  References (2)  Prompts (1)"
   echo ""
-  info "Restart Claude Code to activate the plugin."
+  echo -e "${GREEN}Available Skills:${NC}"
+  echo "  csw-article-pipeline  — 7-step WeChat article generation"
+  echo "  csw-article-modify    — Edit existing article sections"
+  echo ""
+  info "Restart Claude Code to activate."
 }
 
 # ---------------------------------------------------------------------------
