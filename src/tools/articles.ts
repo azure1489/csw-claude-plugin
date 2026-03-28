@@ -39,11 +39,11 @@ export function registerArticleTools(server: McpServer, client: CswClient) {
     "获取单篇文章详情",
     {
       article_no: z.string().describe("文章编号"),
-      include_selections: z.boolean().optional().describe("是否包含关联选稿"),
+      include_selections: z.string().optional().describe("是否包含关联选稿，传 'true' 或 'false'"),
     },
     async (params) => {
       const result = await client.get(`/v1/articles/${params.article_no}`, {
-        "include-selections": params.include_selections,
+        "include-selections": params.include_selections === "true" ? "true" : undefined,
       });
       return jsonContent(result);
     }

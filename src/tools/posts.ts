@@ -41,11 +41,11 @@ export function registerPostTools(server: McpServer, client: CswClient) {
     "获取单篇 Instagram 贴文详情",
     {
       post_id: z.string().describe("贴文 ID"),
-      include_media: z.boolean().optional().describe("是否包含媒体内容"),
+      include_media: z.string().optional().describe("是否包含媒体内容，传 'true' 或 'false'"),
     },
     async (params) => {
       const result = await client.get(`/v1/posts/${params.post_id}`, {
-        "include-media": params.include_media,
+        "include-media": params.include_media === "true" ? "true" : undefined,
       });
       return jsonContent(result);
     }
@@ -56,11 +56,11 @@ export function registerPostTools(server: McpServer, client: CswClient) {
     "隐藏或取消隐藏贴文",
     {
       post_id: z.string().describe("贴文 ID"),
-      hidden: z.boolean().describe("true 为隐藏，false 为取消隐藏"),
+      hidden: z.string().describe("'true' 为隐藏，'false' 为取消隐藏"),
     },
     async (params) => {
       const result = await client.post(`/v1/posts/${params.post_id}/hide`, {
-        hidden: params.hidden,
+        hidden: params.hidden === "true",
       });
       return jsonContent(result);
     }
