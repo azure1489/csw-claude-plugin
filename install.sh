@@ -221,8 +221,8 @@ install() {
 
   ok "CSW Claude Plugin installed successfully!"
   echo ""
-  echo -e "${GREEN}Available MCP Tools (27 total):${NC}"
-  echo "  Accounts (1)    Posts (7)       Selections (4)"
+  echo -e "${GREEN}Available MCP Tools (25 total):${NC}"
+  echo "  Accounts (1)    Posts (7)       User Selections (2)"
   echo "  Articles (5)    Sections (4)    Publishing (3)"
   echo "  References (2)  Prompts (1)"
   echo ""

@@ -15,7 +15,7 @@ Show the following tool categories and their tools:
 |----------|-------|
 | Accounts (1) | `csw_accounts_list` |
 | Posts (7) | `csw_posts_search`, `csw_posts_get`, `csw_posts_hide`, `csw_posts_select`, `csw_posts_deselect`, `csw_posts_favorite`, `csw_posts_unfavorite` |
-| Selections (4) | `csw_selections_create`, `csw_selections_show`, `csw_selections_add`, `csw_selections_remove` |
+| User Selections (2) | `csw_user_selections_list`, `csw_user_selections_count` |
 | Articles (5) | `csw_articles_list`, `csw_articles_get`, `csw_articles_create`, `csw_articles_create_direct`, `csw_articles_update` |
 | Sections (4) | `csw_sections_list`, `csw_sections_create`, `csw_sections_update`, `csw_sections_delete` |
 | Publishing (3) | `csw_articles_assemble`, `csw_articles_preview`, `csw_articles_push_wechat` |
