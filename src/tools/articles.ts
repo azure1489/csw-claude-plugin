@@ -51,14 +51,16 @@ export function registerArticleTools(server: McpServer, client: CswClient) {
 
   server.tool(
     "csw_articles_create",
-    "基于选稿会话创建文章",
+    "创建文章，可选传入贴文 ID 关联并标记为已发布，不传则创建空文章",
     {
-      selection_session_id: z.string().describe("选稿会话 ID"),
+      post_ids: z.string().optional().describe("贴文 ID，逗号分隔。不传则创建空文章"),
     },
     async (params) => {
-      const result = await client.post("/v1/articles", {
-        selectionSessionId: params.selection_session_id,
-      });
+      const body: Record<string, unknown> = {};
+      if (params.post_ids) {
+        body.postIds = params.post_ids.split(",").map((id: string) => id.trim());
+      }
+      const result = await client.post("/v1/articles", body);
       return jsonContent(result);
     }
   );
