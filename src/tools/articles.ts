@@ -70,7 +70,7 @@ export function registerArticleTools(server: McpServer, client: CswClient) {
     "直接创建文章（指定标题、摘要和内容）",
     {
       title: z.string().describe("文章标题"),
-      summary: z.string().describe("文章摘要"),
+      summary: z.string().optional().describe("文章摘要"),
       content: z.string().describe("文章正文内容"),
     },
     async (params) => {
@@ -94,12 +94,12 @@ export function registerArticleTools(server: McpServer, client: CswClient) {
       tags: z.array(z.string()).optional().describe("文章标签列表"),
     },
     async (params) => {
-      const result = await client.put(`/v1/articles/${params.article_no}`, {
-        title: params.title,
-        summary: params.summary,
-        content: params.content,
-        tags: params.tags,
-      });
+      const body: Record<string, unknown> = {};
+      if (params.title !== undefined) body.title = params.title;
+      if (params.summary !== undefined) body.summary = params.summary;
+      if (params.content !== undefined) body.content = params.content;
+      if (params.tags !== undefined) body.tags = params.tags;
+      const result = await client.put(`/v1/articles/${params.article_no}`, body);
       return jsonContent(result);
     }
   );

@@ -12,7 +12,7 @@ The installer will:
 1. Check Node.js >= 18
 2. Prompt for your `CSW_API_KEY` and `CSW_API_URL`
 3. Test connectivity to the CSW API
-4. Write the MCP server config to `~/.claude/settings.json`
+4. Write the MCP server config to `~/.claude.json`
 
 After installation, restart Claude Code and run `/csw-setup` to verify.
 
@@ -40,7 +40,7 @@ After installation, restart Claude Code and run `/csw-setup` to verify.
 
 ## Manual Configuration
 
-Add the following to `~/.claude/settings.json`:
+Add the following to `~/.claude.json`:
 
 ```json
 {

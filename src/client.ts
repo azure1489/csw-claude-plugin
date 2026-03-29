@@ -56,7 +56,10 @@ export class CswClient {
 
   private async handleResponse(response: Response): Promise<unknown> {
     if (response.ok) {
-      return response.json();
+      if (response.status === 204) return {};
+      const text = await response.text();
+      if (!text) return {};
+      return JSON.parse(text);
     }
 
     if (response.status === 401) {

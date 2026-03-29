@@ -40,7 +40,7 @@ Possible causes and fixes:
    ```bash
    curl -fsSL https://raw.githubusercontent.com/csw-team/csw-claude-plugin/main/install.sh | bash
    ```
-3. **Wrong API URL** — Check that `CSW_API_URL` in `~/.claude/settings.json` points to your CSW instance.
+3. **Wrong API URL** — Check that `CSW_API_URL` in `~/.claude.json` points to your CSW instance.
 4. **Network issue** — Verify you can reach the CSW API:
    ```bash
    curl -H "Authorization: Bearer $CSW_API_KEY" "$CSW_API_URL/api/v1/accounts"
