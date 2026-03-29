@@ -24,7 +24,7 @@ Show the following tool categories and their tools:
 
 Then show the available skills:
 
-- **`/article-pipeline`** — End-to-end WeChat article generation from Instagram posts (select posts, create article, generate sections, assemble, preview, push to WeChat)
+- **`/article-pipeline`** — End-to-end CSW WeChat article generation from Instagram posts (confirm selections, create article, generate sections, assemble, preview, push to WeChat)
 - **`/article-modify`** — Targeted article editing: modify title, summary, individual sections, or tags without regenerating the whole article
 
 ---

@@ -1,6 +1,6 @@
 # csw-claude-plugin
 
-Claude Code plugin for CSW Agent — Instagram post management and WeChat article generation via MCP tools and skills.
+Claude Code plugin for CSW Agent — Instagram post management and CSW WeChat article generation via MCP tools and skills.
 
 ## Quick Install
 
@@ -35,7 +35,7 @@ After installation, restart Claude Code and run `/csw-setup` to verify.
 
 | Skill | Description |
 |-------|-------------|
-| `/article-pipeline` | End-to-end WeChat article generation from Instagram posts — select posts, create article, generate sections, assemble, preview, and push to WeChat |
+| `/article-pipeline` | End-to-end CSW WeChat article generation from Instagram posts — confirm selections, create article, generate sections, assemble, preview, and push to WeChat |
 | `/article-modify` | Targeted article editing — modify title, summary, individual sections, or tags without regenerating the full article |
 
 ## Manual Configuration

@@ -5,6 +5,7 @@
 # Usage:
 #   curl -sSL <url>/install.sh | bash
 #   curl -sSL <url>/install.sh | bash -s -- --api-key sk-csw-xxx --api-url https://...
+#   curl -sSL <url>/install.sh | bash -s -- --platform openclaw
 #   curl -sSL <url>/install.sh | bash -s -- --uninstall
 
 set -euo pipefail
@@ -21,10 +22,13 @@ warn()  { echo -e "${YELLOW}[WARN]${NC}  $*"; }
 error() { echo -e "${RED}[ERROR]${NC} $*" >&2; }
 ok()    { echo -e "${GREEN}[OK]${NC}    $*"; }
 
-CONFIG_FILE="${HOME}/.claude.json"
 NPM_PACKAGE="@aworld/csw-claude-plugin@latest"
 MCP_NAME="csw"
-SKILLS_DIR="${HOME}/.claude/skills"
+
+# ---------------------------------------------------------------------------
+# Platform detection: Claude Code vs OpenClaw
+# ---------------------------------------------------------------------------
+ARG_PLATFORM=""
 
 # ---------------------------------------------------------------------------
 # Parse arguments
@@ -38,9 +42,51 @@ while [[ $# -gt 0 ]]; do
     --uninstall)  ARG_UNINSTALL=true; shift ;;
     --api-key)    ARG_API_KEY="$2"; shift 2 ;;
     --api-url)    ARG_API_URL="$2"; shift 2 ;;
+    --platform)   ARG_PLATFORM="$2"; shift 2 ;;
     *)            shift ;;
   esac
 done
+
+# ---------------------------------------------------------------------------
+# Detect or prompt for platform
+# ---------------------------------------------------------------------------
+detect_platform() {
+  if [[ -n "${ARG_PLATFORM}" ]]; then
+    PLATFORM="${ARG_PLATFORM}"
+  elif [[ -d "${HOME}/.claude" && -d "${HOME}/.openclaw" ]]; then
+    echo ""
+    echo "Detected both Claude Code and OpenClaw installations."
+    echo "  1) claude   — Claude Code (~/.claude.json, ~/.claude/skills/)"
+    echo "  2) openclaw — OpenClaw   (~/.openclaw/openclaw.json, ~/.openclaw/skills/)"
+    echo ""
+    while true; do
+      read -rp "Select platform [1/2]: " choice
+      case "${choice}" in
+        1|claude)   PLATFORM="claude"; break ;;
+        2|openclaw) PLATFORM="openclaw"; break ;;
+        *) warn "Please enter 1 or 2." ;;
+      esac
+    done
+  elif [[ -d "${HOME}/.openclaw" ]]; then
+    PLATFORM="openclaw"
+  else
+    PLATFORM="claude"
+  fi
+
+  if [[ "${PLATFORM}" == "openclaw" ]]; then
+    CONFIG_FILE="${HOME}/.openclaw/openclaw.json"
+    SKILLS_DIR="${HOME}/.openclaw/skills"
+  else
+    CONFIG_FILE="${HOME}/.claude.json"
+    SKILLS_DIR="${HOME}/.claude/skills"
+  fi
+
+  info "Platform: ${PLATFORM}"
+  info "Config:   ${CONFIG_FILE}"
+  info "Skills:   ${SKILLS_DIR}"
+}
+
+detect_platform
 
 # ---------------------------------------------------------------------------
 # Uninstall
@@ -131,8 +177,9 @@ install() {
     warn "Unexpected HTTP status ${HTTP_STATUS} — proceeding anyway."
   fi
 
-  # 5. Write MCP config to ~/.claude.json
+  # 5. Write MCP config
   info "Writing MCP config to ${CONFIG_FILE} ..."
+  mkdir -p "$(dirname "${CONFIG_FILE}")"
 
   node -e "
     const fs = require('fs');
@@ -180,7 +227,7 @@ install() {
   echo "  References (2)  Prompts (1)"
   echo ""
   echo -e "${GREEN}Available Skills:${NC}"
-  echo "  csw-article-pipeline  — 7-step WeChat article generation"
+  echo "  csw-article-pipeline  — 5-step CSW WeChat article generation"
   echo "  csw-article-modify    — Edit existing article sections"
   echo ""
   info "Restart Claude Code to activate."

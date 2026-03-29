@@ -5,7 +5,7 @@
     {
       "name": "csw-claude-plugin",
       "source": "./",
-      "description": "Instagram post management and WeChat article generation",
+      "description": "Instagram post management and CSW WeChat article generation",
       "category": "productivity",
       "tags": ["mcp", "wechat", "instagram", "content-generation"]
     }

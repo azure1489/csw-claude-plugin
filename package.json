@@ -1,7 +1,7 @@
 {
   "name": "@aworld/csw-claude-plugin",
-  "version": "0.1.3",
-  "description": "Claude Code plugin for CSW Agent — Instagram post management and WeChat article generation via MCP",
+  "version": "0.2.0",
+  "description": "Claude Code plugin for CSW Agent — Instagram post management and CSW WeChat article generation via MCP",
   "type": "module",
   "bin": {
     "csw-mcp": "./bin/csw-mcp.mjs"
