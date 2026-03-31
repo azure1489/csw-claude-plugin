@@ -32,9 +32,9 @@ metadata:
 
 ---
 
-### Step 2 — 创建文章
+### Step 2 — 创建营事编集室文章
 
-1. 创建文章，获取 `article_no`
+1. 创建营事编集室文章，获取 `article_no`
 2. 调用 `csw_articles_get`，传入 `article_no`，设置 `include_selections: true`，确认文章创建成功并记录所有关联帖子
 
 ---
@@ -52,10 +52,16 @@ metadata:
 - `cover_image`：使用第一个帖子的缩略图 URL，调用 `csw_sections_create`
 - `header`：使用固定模板，调用 `csw_sections_create`
 
+⛔ **GATE：确认 3b**
+- 向用户展示已创建的元数据 section，询问是否需要修改，确认后再继续
+
 **3c — 全局 Section（LLM 生成）**
 - `title`：基于所有帖子的整体主题，用 LLM 生成标题，调用 `csw_sections_create`
 - `summary`：基于所有帖子内容，用 LLM 生成摘要，调用 `csw_sections_create`
 - `toc`：根据帖子列表生成目录，调用 `csw_sections_create`
+
+⛔ **GATE：确认 3c**
+- 向用户展示生成的 title、summary、toc，询问是否需要修改，确认后再继续
 
 **3d — 帖子循环（每个帖子依次处理）**
 
@@ -64,14 +70,18 @@ metadata:
 2. 调用 `csw_sections_create` 创建 `post_cover_image`（order: 5+i\*2），内容为帖子缩略图 URL
 3. 使用帖子数据 + 对应 prompt 模板，用 LLM 生成帖子正文
 4. 调用 `csw_sections_create` 创建 `post_content`（order: 6+i\*2）
+5. ⛔ **GATE：确认帖子 i** — 向用户展示当前帖子生成的 post_cover_image 和 post_content，询问是否需要修改，确认后再处理下一个帖子
 
 **3e — 尾部 Section**
 - `footer`：使用固定模板或 LLM 生成，调用 `csw_sections_create`
 
+⛔ **GATE：确认 3e**
+- 向用户展示 footer 内容，询问是否需要修改，确认后再继续
+
 完成后，调用 `csw_sections_list` 展示所有 section 列表。
 
-⛔ **GATE：确认内容**
-- 向用户展示所有 section，等待确认或修改意见后再继续
+⛔ **GATE：确认全部内容**
+- 向用户展示所有 section 完整列表，做最终确认后再继续
 
 ---
 

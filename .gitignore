@@ -2,3 +2,7 @@ node_modules/
 dist/
 *.tgz
 .env
+memory
+MEMORY.md
+pyproject.toml
+.real/
