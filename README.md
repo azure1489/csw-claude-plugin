@@ -1,20 +1,17 @@
 # csw-claude-plugin
 
-Claude Code plugin for CSW Agent — Instagram post management and CSW WeChat article generation via MCP tools and skills.
+CSW Agent — Instagram 帖子管理 + 微信公众号文章生成。
+提供 25 个 MCP 工具 + 2 个 Agent Skill。
 
 ## Quick Install
 
-```bash
-curl -fsSL https://raw.githubusercontent.com/csw-team/csw-claude-plugin/main/install.sh | bash
-```
+对你的 agent（Claude Code、OpenClaw、Cursor、Cline、Gemini CLI 等任何兼容 MCP +
+Anthropic Agent Skills 格式的 agent）说：
 
-The installer will:
-1. Check Node.js >= 18
-2. Prompt for your `CSW_API_KEY` and `CSW_API_URL`
-3. Test connectivity to the CSW API
-4. Write the MCP server config to `~/.claude.json`
+> 帮我安装 https://github.com/azure1489/csw-claude-plugin
 
-After installation, restart Claude Code and run `/csw-setup` to verify.
+Agent 会读取 [`INSTALL.md`](./INSTALL.md)，问你要 `CSW_API_KEY` 和
+`CSW_API_URL`，自动配置 MCP server 并 fetch skill 文件到对应目录。
 
 ## What's Included
 
@@ -35,48 +32,29 @@ After installation, restart Claude Code and run `/csw-setup` to verify.
 
 | Skill | Description |
 |-------|-------------|
-| `/article-pipeline` | End-to-end CSW WeChat article generation from Instagram posts — confirm selections, create article, generate sections, assemble, preview, and push to WeChat |
-| `/article-modify` | Targeted article editing — modify title, summary, individual sections, or tags without regenerating the full article |
+| `csw-article-pipeline` | 5 步流程：确认选帖 → 创建文章 → 生成内容（含多个 GATE 确认点）→ 组装预览 → 发布微信 |
+| `csw-article-modify` | 修改已有文章的分段、标题、摘要等，无需重新生成全文 |
 
-## Manual Configuration
+## Manual Install
 
-Add the following to `~/.claude.json`:
-
-```json
-{
-  "mcpServers": {
-    "csw": {
-      "command": "npx",
-      "args": ["-y", "csw-claude-plugin@latest"],
-      "env": {
-        "CSW_API_KEY": "sk-csw-your-key-here",
-        "CSW_API_URL": "https://your-csw-instance.com"
-      }
-    }
-  }
-}
-```
+不想用 agent 自助安装？把 [`INSTALL.md`](./INSTALL.md) 当成 checklist，
+里面的每一步手工执行即可（自己输入凭据、把 MCP JSON 复制到自己 agent 的配置文件、
+手工 curl 下载 SKILL.md 到对应目录）。INSTALL.md 既是给 agent 看的指令，
+也是给人类看的 checklist。
 
 ## Uninstall
 
-```bash
-curl -fsSL https://raw.githubusercontent.com/csw-team/csw-claude-plugin/main/install.sh | bash -s -- --uninstall
-```
-
-Or run the local script:
-
-```bash
-./install.sh --uninstall
-```
+对你的 agent 说"卸载 csw-claude-plugin"，agent 会按 `INSTALL.md` 末尾的
+卸载流程操作。或者参考 INSTALL.md 的 Uninstall 章节手工清理。
 
 ## Development
 
 ```bash
-npm install        # Install dependencies
-npm run dev        # Run MCP server with tsx (no build step)
-npm run build      # Compile TypeScript to dist/
-npm run test       # Run test suite (Vitest)
-npm run test:watch # Run tests in watch mode
+npm install        # 安装依赖
+npm run dev        # tsx 直接运行 MCP server（无需构建）
+npm run build      # 编译 TypeScript 到 dist/
+npm run test       # 跑测试
+npm run test:watch # 测试 watch 模式
 ```
 
 ## License
