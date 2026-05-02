@@ -1,8 +1,12 @@
 {
   "name": "@aworld/csw-claude-plugin",
-  "version": "0.2.0",
-  "description": "Claude Code plugin for CSW Agent — Instagram post management and CSW WeChat article generation via MCP",
+  "version": "0.3.0",
+  "description": "CSW Agent — Instagram post management and WeChat article generation. Installable by any MCP+Skills compatible agent via GitHub URL.",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/azure1489/csw-claude-plugin.git"
+  },
   "bin": {
     "csw-mcp": "./bin/csw-mcp.mjs"
   },
@@ -10,16 +14,15 @@
     "bin",
     "dist",
     "skills",
-    "commands",
-    ".claude-plugin",
-    "install.sh"
+    "INSTALL.md",
+    "README.md"
   ],
   "scripts": {
     "build": "tsc",
     "dev": "tsx src/index.ts",
     "test": "vitest run",
     "test:watch": "vitest",
-    "prepublishOnly": "npm run build"
+    "prepare": "npm run build"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.28.0",
@@ -34,9 +37,13 @@
   "engines": {
     "node": ">=18"
   },
-  "publishConfig": {
-    "access": "public"
-  },
   "license": "MIT",
-  "keywords": ["claude-code", "mcp", "csw", "wechat", "instagram"]
+  "keywords": [
+    "mcp",
+    "agent-skills",
+    "anthropic-skills",
+    "csw",
+    "wechat",
+    "instagram"
+  ]
 }
