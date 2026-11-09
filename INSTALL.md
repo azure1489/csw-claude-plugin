@@ -9,7 +9,7 @@
 
 帮用户安装 `csw-claude-plugin`。这个项目提供：
 
-- **25 个 CSW MCP 工具**：Instagram 帖子管理 + 微信文章生成的完整 API 封装
+- **26 个 CSW MCP 工具**：Instagram 帖子管理 + 微信文章生成的完整 API 封装
 - **2 个 Agent Skill**：
   - `csw-article-pipeline` — 端到端文章生成流水线
   - `csw-article-modify` — 修改已有文章
@@ -27,7 +27,7 @@
    - 必须以 `sk-csw-` 开头
    - 如果用户输入的不符合此前缀，提示并重新询问
 2. **`CSW_API_URL`**
-   - 默认值：`https://dev-agent.aworld.ltd`
+   - 默认值：`https://agent-api.campsomewhere.com`（正式环境）
    - 如果用户直接回车 / 表示用默认，使用默认值
 
 ⛔ **GATE：复述确认**
