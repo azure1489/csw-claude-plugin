@@ -37,6 +37,30 @@ export function registerPostTools(server: McpServer, client: CswClient) {
   );
 
   server.tool(
+    "csw_posts_window",
+    "取时间窗内的全部贴文数据（含媒体列表），按时间倒序。不走语义搜索，没有 csw_posts_search 的 100 条上限；不传 start/end 时默认「前一天到当天」（UTC）。采集全量用这个，不要用 csw_posts_search",
+    {
+      start: z.string().optional().describe("开始日期 YYYY-MM-DD 或 ISO 8601 时间（含）；缺省为前一天 00:00 UTC"),
+      end: z.string().optional().describe("结束日期 YYYY-MM-DD（含当天整日）或 ISO 8601 时间（不含）；缺省为当天"),
+      include_hidden: z.string().optional().describe("传 'true' 时包含已隐藏的贴文"),
+      include_media: z.string().optional().describe("传 'false' 时不带媒体列表；默认带"),
+      limit: z.number().optional().describe("单次上限，最大 2000，默认 2000"),
+      offset: z.number().optional().describe("偏移量；返回里 has_more 为 true 时再按 offset 取余下部分"),
+    },
+    async (params) => {
+      const result = await client.get("/v1/posts/window", {
+        start: params.start,
+        end: params.end,
+        include_hidden: params.include_hidden,
+        include_media: params.include_media,
+        limit: params.limit !== undefined ? String(params.limit) : undefined,
+        offset: params.offset !== undefined ? String(params.offset) : undefined,
+      });
+      return jsonContent(result);
+    }
+  );
+
+  server.tool(
     "csw_posts_get",
     "获取单篇 Instagram 贴文详情",
     {
