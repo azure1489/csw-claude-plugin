@@ -1,7 +1,7 @@
 # csw-claude-plugin
 
 CSW Agent — Instagram 帖子管理 + 微信公众号文章生成。
-提供 25 个 MCP 工具 + 2 个 Agent Skill。
+提供 26 个 MCP 工具 + 2 个 Agent Skill。
 
 ## Quick Install
 
@@ -15,12 +15,12 @@ Agent 会读取 [`INSTALL.md`](./INSTALL.md)，问你要 `CSW_API_KEY` 和
 
 ## What's Included
 
-### MCP Tools (25 total)
+### MCP Tools (26 total)
 
 | Category | Count | Tools |
 |----------|-------|-------|
 | Accounts | 1 | `csw_accounts_list` |
-| Posts | 7 | `csw_posts_search`, `csw_posts_get`, `csw_posts_hide`, `csw_posts_select`, `csw_posts_deselect`, `csw_posts_favorite`, `csw_posts_unfavorite` |
+| Posts | 8 | `csw_posts_search`, `csw_posts_window`, `csw_posts_get`, `csw_posts_hide`, `csw_posts_select`, `csw_posts_deselect`, `csw_posts_favorite`, `csw_posts_unfavorite` |
 | User Selections | 2 | `csw_user_selections_list`, `csw_user_selections_count` |
 | Articles | 5 | `csw_articles_list`, `csw_articles_get`, `csw_articles_create`, `csw_articles_create_direct`, `csw_articles_update` |
 | Sections | 4 | `csw_sections_list`, `csw_sections_create`, `csw_sections_update`, `csw_sections_delete` |
